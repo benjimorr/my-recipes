@@ -1,7 +1,8 @@
-/* eslint-disable no-unused-expressions */
-
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import Recipes from '../components/Recipes';
 
 const theme = {
   blue: '#007AB2',
@@ -48,17 +49,43 @@ const Inner = styled.div`
   padding: 2rem;
 `;
 
-const App = () => (
-  <ThemeProvider theme={theme}>
-    <React.Fragment>
-      <GlobalStyle />
-      <StyledPage>
-        <Inner>
-          <h1>Welcome to MyRecipes!</h1>
-        </Inner>
-      </StyledPage>
-    </React.Fragment>
-  </ThemeProvider>
-);
+const App = props => {
+  const { recipes } = props;
+
+  return (
+    <Router>
+      <ThemeProvider theme={theme}>
+        <React.Fragment>
+          <GlobalStyle />
+          <StyledPage>
+            <Inner>
+              <h1>Welcome to MyRecipes!</h1>
+              <Switch>
+                <Route
+                  exact
+                  path="/"
+                  render={props => <Recipes {...props} recipes={recipes} />}
+                />
+                <Route
+                  exact
+                  path="/recipes"
+                  render={props => <Recipes {...props} recipes={recipes} />}
+                />
+              </Switch>
+            </Inner>
+          </StyledPage>
+        </React.Fragment>
+      </ThemeProvider>
+    </Router>
+  );
+};
+
+App.propTypes = {
+  recipes: PropTypes.array
+};
+
+App.defaultProps = {
+  recipes: []
+};
 
 export default App;

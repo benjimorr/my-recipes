@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import Header from '../components/Header';
 import RecipesPage from '../pages/RecipesPage';
 import NotFoundPage from '../pages/NotFoundPage';
 
@@ -55,8 +56,8 @@ const App = () => (
       <React.Fragment>
         <GlobalStyle />
         <StyledPage>
+          <Header />
           <Inner>
-            <h1>Welcome to MyRecipes!</h1>
             <Switch>
               <Route exact path="/" component={RecipesPage} />
               <Route exact path="/recipes" component={RecipesPage} />

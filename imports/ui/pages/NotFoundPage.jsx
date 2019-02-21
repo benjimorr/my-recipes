@@ -8,7 +8,7 @@ const Center = styled.div`
 const NotFoundPage = () => (
   <Center>
     <h1>Oops!</h1>
-    <p>That page does not exist.</p>
+    <p>That page was not found.</p>
   </Center>
 );
 

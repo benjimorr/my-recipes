@@ -5,7 +5,7 @@ const Recipes = props => (
   <div>
     {props.recipes.map(recipe => (
       <div key={recipe._id}>
-        <h3>{recipe.title}</h3>
+        <h2>{recipe.title}</h2>
         <a href={recipe.url}>View Recipe</a>
       </div>
     ))}

@@ -3,7 +3,7 @@ import RecipesContainer from '../containers/RecipesContainer';
 
 const RecipesPage = () => (
   <div>
-    <h2>All Recipes</h2>
+    <h1>All Recipes</h1>
     <RecipesContainer />
   </div>
 );

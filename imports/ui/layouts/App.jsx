@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import Header from '../components/Header';
 import RecipesPage from '../pages/RecipesPage';
+import CreateRecipePage from '../pages/CreateRecipePage';
 import NotFoundPage from '../pages/NotFoundPage';
 
 const theme = {
@@ -61,6 +62,7 @@ const App = () => (
             <Switch>
               <Route exact path="/" component={RecipesPage} />
               <Route exact path="/recipes" component={RecipesPage} />
+              <Route exact path="/recipes/new" component={CreateRecipePage} />
               <Route path="/*" component={NotFoundPage} />
             </Switch>
           </Inner>

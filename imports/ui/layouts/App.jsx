@@ -1,7 +1,10 @@
-/* eslint-disable no-unused-expressions */
-
 import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
+import Header from '../components/Header';
+import RecipesPage from '../pages/RecipesPage';
+import CreateRecipePage from '../pages/CreateRecipePage';
+import NotFoundPage from '../pages/NotFoundPage';
 
 const theme = {
   blue: '#007AB2',
@@ -49,16 +52,24 @@ const Inner = styled.div`
 `;
 
 const App = () => (
-  <ThemeProvider theme={theme}>
-    <React.Fragment>
-      <GlobalStyle />
-      <StyledPage>
-        <Inner>
-          <h1>Welcome to MyRecipes!</h1>
-        </Inner>
-      </StyledPage>
-    </React.Fragment>
-  </ThemeProvider>
+  <Router>
+    <ThemeProvider theme={theme}>
+      <React.Fragment>
+        <GlobalStyle />
+        <StyledPage>
+          <Header />
+          <Inner>
+            <Switch>
+              <Route exact path="/" component={RecipesPage} />
+              <Route exact path="/recipes" component={RecipesPage} />
+              <Route exact path="/recipes/new" component={CreateRecipePage} />
+              <Route path="/*" component={NotFoundPage} />
+            </Switch>
+          </Inner>
+        </StyledPage>
+      </React.Fragment>
+    </ThemeProvider>
+  </Router>
 );
 
 export default App;

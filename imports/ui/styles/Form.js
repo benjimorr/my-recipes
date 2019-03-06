@@ -8,12 +8,14 @@ const Form = styled.form`
   line-height: 1.5;
   font-weight: 600;
   label {
+    cursor: pointer;
     display: block;
     margin-bottom: 1rem;
   }
   input,
   textarea,
   select {
+    border-radius: 5px;
     width: 100%;
     padding: 0.5rem;
     font-size: 1.25rem;
@@ -28,10 +30,16 @@ const Form = styled.form`
     width: auto;
     background: ${props => props.theme.blue};
     color: white;
+    cursor: pointer;
     border: 0;
     font-size: 2rem;
     font-weight: 600;
     padding: 0.5rem 1.2rem;
+    margin: 1rem 0;
+  }
+  input[type='checkbox'] {
+    background: transparent;
+    cursor: pointer;
   }
   fieldset {
     border: 0;

@@ -1,11 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-
-const StyledTag = styled.li``;
 
 const Tag = ({ name, onClick }) => (
-  <StyledTag>
+  <li>
     {name}
     <button
       onClick={e => {
@@ -15,7 +12,7 @@ const Tag = ({ name, onClick }) => (
     >
       &times;
     </button>
-  </StyledTag>
+  </li>
 );
 
 Tag.propTypes = {

@@ -23,6 +23,26 @@ const RecipeTags = styled.div`
   }
 `;
 
+const MainIngredientsSection = styled.div`
+  .ingredient-tags {
+    padding: 0;
+    li {
+      background-color: ${props => props.theme.blue};
+      border-radius: 5px;
+      color: white;
+      display: inline-block;
+      font-size: 1.5rem;
+      list-style: none;
+      margin: 0 1rem;
+      padding: 0 1.5rem 0.5rem 1.5rem;
+    }
+    button {
+      margin: 0 0 0 1rem;
+      padding: 0;
+    }
+  }
+`;
+
 export class CreateRecipe extends Component {
   state = {
     title: '',
@@ -161,7 +181,7 @@ export class CreateRecipe extends Component {
             </div>
           </RecipeTags>
 
-          <div className="main-ingredients">
+          <MainIngredientsSection>
             <label htmlFor="currentIngredient">
               Main Ingredients
               <input
@@ -186,7 +206,7 @@ export class CreateRecipe extends Component {
                 ))}
               </ul>
             )}
-          </div>
+          </MainIngredientsSection>
 
           <button type="submit" disabled={loading}>
             Submit

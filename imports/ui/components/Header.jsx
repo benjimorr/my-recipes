@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
+import Nav from './Nav';
 
 const StyledHeader = styled.header`
   .bar {
@@ -43,6 +44,7 @@ const Header = () => (
       <Logo>
         <Link to="/">MyRecipes</Link>
       </Logo>
+      <Nav />
     </div>
   </StyledHeader>
 );

@@ -1,23 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const Tag = ({ name, onClick }) => (
+const Tag = ({ name, withButton, onClick }) => (
   <li>
     {name}
-    <button
-      onClick={e => {
-        e.preventDefault();
-        onClick(name);
-      }}
-    >
-      &times;
-    </button>
+    {withButton && (
+      <button
+        onClick={e => {
+          e.preventDefault();
+          onClick(name);
+        }}
+      >
+        &times;
+      </button>
+    )}
   </li>
 );
 
 Tag.propTypes = {
   name: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired
+  withButton: PropTypes.bool.isRequired,
+  onClick: PropTypes.func
 };
 
 export default Tag;

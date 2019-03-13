@@ -8,7 +8,7 @@ import checkboxes from '../../../lib/tagsCheckboxes';
 import { Recipes } from '../../api/recipes/recipes';
 
 const RecipeTags = styled.div`
-  .recipe-tags-area {
+  .recipeTagsArea {
     display: grid;
     font-size: 1.25rem;
     font-weight: normal;
@@ -24,7 +24,7 @@ const RecipeTags = styled.div`
 `;
 
 const MainIngredientsSection = styled.div`
-  .ingredient-tags {
+  .ingredientTags {
     padding: 0;
     li {
       background-color: ${props => props.theme.blue};
@@ -33,7 +33,7 @@ const MainIngredientsSection = styled.div`
       display: inline-block;
       font-size: 1.5rem;
       list-style: none;
-      margin: 0 1rem;
+      margin: 0 1rem 0.5rem 0;
       padding: 0 1.5rem 0.5rem 1.5rem;
     }
     button {
@@ -94,7 +94,7 @@ export class CreateRecipe extends Component {
     e.preventDefault();
 
     // Get values from state
-    const { title, url, mainIngredients, tags } = this.state;
+    const { title, url, comments, mainIngredients, tags } = this.state;
     // Find the tags from the Map structure that are actually selected
     const selectedTags = [...tags].reduce((acc, [key, value]) => {
       if (value) acc.push(key);
@@ -110,6 +110,7 @@ export class CreateRecipe extends Component {
       Recipes.insert({
         title,
         url,
+        comments,
         mainIngredients,
         tags: selectedTags,
         createdAt: new Date(),
@@ -165,7 +166,7 @@ export class CreateRecipe extends Component {
 
           <RecipeTags>
             Recipe Tags
-            <div className="recipe-tags-area">
+            <div className="recipeTagsArea">
               {checkboxes.map(item => (
                 <label htmlFor={item.name} key={item.name}>
                   <CheckBox
@@ -196,11 +197,12 @@ export class CreateRecipe extends Component {
               />
             </label>
             {this.state.mainIngredients.length > 0 && (
-              <ul className="ingredient-tags">
+              <ul className="ingredientTags">
                 {this.state.mainIngredients.map((ingredient, i) => (
                   <Tag
                     key={i}
                     name={ingredient}
+                    withButton={true}
                     onClick={this.handleTagRemove}
                   />
                 ))}

@@ -13,7 +13,7 @@ const RecipeTags = styled.div`
     font-size: 1.25rem;
     font-weight: normal;
     grid-gap: 5px;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     padding: 1rem 0;
     input {
       display: inline-block;

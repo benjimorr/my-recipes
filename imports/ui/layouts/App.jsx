@@ -13,7 +13,8 @@ const theme = {
   lightGrey: '#E1E1E1',
   offWhite: '#EDEDED',
   maxWidth: '1000px',
-  boxShadow: '0 12px 24px 0 rgba(0, 0, 0, 0.09)'
+  boxShadow: '0 12px 24px 0 rgba(0, 0, 0, 0.2)',
+  smallBoxShadow: '0 8px 4px -2px rgba(0, 0, 0, 0.2)'
 };
 
 const GlobalStyle = createGlobalStyle`

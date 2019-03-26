@@ -3,6 +3,7 @@ import styled from 'styled-components';
 const Form = styled.form`
   background: rgba(0, 0, 0, 0.05);
   border: 5px solid white;
+  box-shadow: ${props => props.theme.boxShadow};
   padding: 20px;
   font-size: 1.75rem;
   line-height: 1.5;

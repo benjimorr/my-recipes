@@ -4,6 +4,7 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import Header from '../components/Header';
 import RecipesPage from '../pages/RecipesPage';
 import CreateRecipePage from '../pages/CreateRecipePage';
+import EditRecipePage from '../pages/EditRecipePage';
 import NotFoundPage from '../pages/NotFoundPage';
 
 const theme = {
@@ -64,6 +65,11 @@ const App = () => (
               <Route exact path="/" component={RecipesPage} />
               <Route exact path="/recipes" component={RecipesPage} />
               <Route exact path="/recipes/new" component={CreateRecipePage} />
+              <Route
+                exact
+                path="/recipes/edit/:recipeId"
+                component={EditRecipePage}
+              />
               <Route path="/*" component={NotFoundPage} />
             </Switch>
           </Inner>

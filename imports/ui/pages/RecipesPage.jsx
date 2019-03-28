@@ -1,10 +1,10 @@
 import React from 'react';
-import RecipeList from '../components/RecipeList';
+import RecipeListContainer from '../containers/RecipeListContainer';
 
 const RecipesPage = () => (
   <div>
     <h1>All Recipes</h1>
-    <RecipeList />
+    <RecipeListContainer />
   </div>
 );
 

@@ -94,7 +94,16 @@ export class CreateRecipe extends Component {
   };
 
   render() {
-    const { loading, error } = this.state;
+    const {
+      loading,
+      error,
+      title,
+      url,
+      comments,
+      tags,
+      currentIngredient,
+      mainIngredients
+    } = this.state;
 
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -108,7 +117,7 @@ export class CreateRecipe extends Component {
               name="title"
               placeholder="Recipe Title"
               required
-              value={this.state.title}
+              value={title}
               onChange={this.handleChange}
             />
           </label>
@@ -121,7 +130,7 @@ export class CreateRecipe extends Component {
               name="url"
               placeholder="Recipe URL"
               required
-              value={this.state.url}
+              value={url}
               onChange={this.handleChange}
             />
           </label>
@@ -132,7 +141,7 @@ export class CreateRecipe extends Component {
               id="comments"
               name="comments"
               placeholder="Enter Comments"
-              value={this.state.comments}
+              value={comments}
               onChange={this.handleChange}
             />
           </label>
@@ -146,7 +155,7 @@ export class CreateRecipe extends Component {
                     id={item.name}
                     name={item.name}
                     value={item.value}
-                    checked={this.state.tags.get(item.value)}
+                    checked={tags.get(item.value)}
                     onChange={this.handleChange}
                   />
                   {item.title}
@@ -164,14 +173,14 @@ export class CreateRecipe extends Component {
                 name="currentIngredient"
                 placeholder="Type an Ingredient and Press Enter"
                 size="35"
-                value={this.state.currentIngredient}
+                value={currentIngredient}
                 onChange={this.handleChange}
                 onKeyDown={this.handleKeyDown}
               />
             </label>
-            {this.state.mainIngredients.length > 0 && (
+            {mainIngredients.length > 0 && (
               <ul className="ingredientTags">
-                {this.state.mainIngredients.map((ingredient, i) => (
+                {mainIngredients.map((ingredient, i) => (
                   <Tag
                     key={i}
                     name={ingredient}
@@ -184,7 +193,7 @@ export class CreateRecipe extends Component {
           </MainIngredients>
 
           <button type="submit" disabled={loading}>
-            Submit
+            Save
           </button>
         </fieldset>
       </Form>

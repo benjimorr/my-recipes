@@ -1,5 +1,5 @@
 import React from 'react';
-import EditRecipe from '../components/EditRecipe';
+import EditRecipeContainer from '../containers/EditRecipeContainer';
 
 const EditRecipePage = ({
   match: {
@@ -8,7 +8,7 @@ const EditRecipePage = ({
 }) => (
   <div>
     <h1>Edit Recipe</h1>
-    <EditRecipe recipeId={recipeId} />
+    <EditRecipeContainer recipeId={recipeId} />
   </div>
 );
 

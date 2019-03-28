@@ -1,47 +1,12 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
+import { withRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Form from '../styles/Form';
+import RecipeTags from '../styles/RecipeTags';
+import MainIngredients from '../styles/MainIngredients';
 import CheckBox from './CheckBox';
 import Tag from './Tag';
 import checkboxes from '../../../lib/tagsCheckboxes';
-
-import { Recipes } from '../../api/recipes/recipes';
-
-const RecipeTags = styled.div`
-  .recipeTagsArea {
-    display: grid;
-    font-size: 1.25rem;
-    font-weight: normal;
-    grid-gap: 5px;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    padding: 1rem 0;
-    input {
-      display: inline-block;
-      margin: 0 1rem;
-      width: auto;
-    }
-  }
-`;
-
-const MainIngredientsSection = styled.div`
-  .ingredientTags {
-    padding: 0;
-    li {
-      background-color: ${props => props.theme.blue};
-      border-radius: 5px;
-      color: white;
-      display: inline-block;
-      font-size: 1.5rem;
-      list-style: none;
-      margin: 0 1rem 0.5rem 0;
-      padding: 0 1.5rem 0.5rem 1.5rem;
-    }
-    button {
-      margin: 0 0 0 1rem;
-      padding: 0;
-    }
-  }
-`;
 
 export class CreateRecipe extends Component {
   state = {
@@ -107,16 +72,24 @@ export class CreateRecipe extends Component {
       this.setState({ error: 'Please add at least one main ingredient.' });
     } else {
       this.setState({ loading: true });
-      Recipes.insert({
-        title,
-        url,
-        comments,
-        mainIngredients,
-        tags: selectedTags,
-        createdAt: new Date(),
-        lastUsed: new Date()
-      });
-      this.setState({ loading: false });
+
+      Meteor.call(
+        'addRecipe',
+        {
+          title,
+          url,
+          comments,
+          mainIngredients,
+          tags: selectedTags
+        },
+        error => {
+          if (error) {
+            this.setState({ loading: false, error: error.message });
+          } else {
+            this.props.history.push('/recipes');
+          }
+        }
+      );
     }
   };
 
@@ -182,7 +155,7 @@ export class CreateRecipe extends Component {
             </div>
           </RecipeTags>
 
-          <MainIngredientsSection>
+          <MainIngredients>
             <label htmlFor="currentIngredient">
               Main Ingredients
               <input
@@ -208,7 +181,7 @@ export class CreateRecipe extends Component {
                 ))}
               </ul>
             )}
-          </MainIngredientsSection>
+          </MainIngredients>
 
           <button type="submit" disabled={loading}>
             Submit
@@ -219,4 +192,10 @@ export class CreateRecipe extends Component {
   }
 }
 
-export default CreateRecipe;
+CreateRecipe.propTypes = {
+  history: PropTypes.object,
+  location: PropTypes.object,
+  match: PropTypes.object
+};
+
+export default withRouter(CreateRecipe);

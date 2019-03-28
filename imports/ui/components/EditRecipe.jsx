@@ -1,37 +1,46 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
+import TrackerReact from 'meteor/ultimatejs:tracker-react';
 import Form from '../styles/Form';
-import CheckBox from './CheckBox';
-import Tag from './Tag';
-import checkboxes from '../../../lib/tagsCheckboxes';
 
 import { Recipes } from '../../api/recipes/recipes';
 
-class EditRecipe extends Component {
+class EditRecipe extends TrackerReact(Component) {
   state = {
     title: '',
-    currentIngredient: '',
-    mainIngredients: [],
-    tags: new Map(),
     url: '',
     comments: '',
     loading: false,
-    error: ''
+    error: '',
+    subscription: {
+      recipe: Meteor.subscribe('singleRecipe', this.props.recipeId)
+    }
   };
 
-  componentDidMount() {
-    const { recipeId } = this.props;
-    const recipeDocument = Recipes.findOne(recipeId);
-    this.setState({ ...recipeDocument });
+  componentWillUnmount() {
+    this.state.subscription.recipe.stop();
   }
 
+  recipe = () => {
+    const { recipeId } = this.props;
+    return Recipes.findOne(recipeId);
+  };
+
   render() {
-    return (
-      <div>
-        <p>Editing recipe</p>
-      </div>
-    );
+    const { recipeId } = this.props;
+    const recipe = this.recipe();
+
+    if (!recipe) {
+      return <p>{`No recipe found with ID ${recipeId}.`}</p>;
+    } else {
+      const { title } = recipe;
+
+      return (
+        <div>
+          <h3>Editing Recipe: {title}</h3>
+        </div>
+      );
+    }
   }
 }
 

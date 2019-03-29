@@ -49,6 +49,12 @@ const Form = styled.form`
       opacity: 0.5;
     }
   }
+  .deleteButton {
+    background: deeppink;
+    position: relative;
+    float: right;
+    margin-top: -4.4rem;
+  }
 `;
 
 export default Form;

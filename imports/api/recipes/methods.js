@@ -20,5 +20,8 @@ Meteor.methods({
         comments
       }
     });
+  },
+  deleteRecipe(id) {
+    Recipes.remove(id);
   }
 });

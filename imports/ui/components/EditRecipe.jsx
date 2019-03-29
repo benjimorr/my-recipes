@@ -22,6 +22,16 @@ class EditRecipe extends Component {
     }
   }
 
+  deleteRecipe = () => {
+    Meteor.call('deleteRecipe', this.props.recipeId, error => {
+      if (error) {
+        this.setState({ error: error.message });
+      } else {
+        this.props.history.push('/recipes');
+      }
+    });
+  };
+
   handleChange = e => {
     const { name, type, value, checked } = e.target;
     if (type === 'checkbox') {
@@ -109,6 +119,13 @@ class EditRecipe extends Component {
             Update
           </button>
         </fieldset>
+        <button
+          className="deleteButton"
+          onClick={this.deleteRecipe}
+          disabled={loading}
+        >
+          Delete
+        </button>
       </Form>
     );
   }

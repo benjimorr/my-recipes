@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Form from '../styles/Form';
@@ -17,14 +18,14 @@ export class CreateRecipe extends Component {
     url: '',
     comments: '',
     loading: false,
-    error: ''
+    error: '',
   };
 
   handleChange = e => {
     const { name, type, value, checked } = e.target;
     if (type === 'checkbox') {
       this.setState(prevState => ({
-        tags: prevState.tags.set(value, checked)
+        tags: prevState.tags.set(value, checked),
       }));
     } else {
       this.setState({ [name]: value });
@@ -35,21 +36,22 @@ export class CreateRecipe extends Component {
     const { value } = e.target;
     if (e.key === 'Enter' && value) {
       e.preventDefault();
+      const { mainIngredients } = this.state;
       const val = value.toLowerCase();
 
       // Check if ingredient already exists
-      if (this.state.mainIngredients.find(ingredient => ingredient === val))
-        return;
+      if (mainIngredients.find(ingredient => ingredient === val)) return;
 
-      this.setState({
+      this.setState(prevState => ({
         currentIngredient: '',
-        mainIngredients: [...this.state.mainIngredients, val]
-      });
+        mainIngredients: [...prevState.mainIngredients, val],
+      }));
     }
   };
 
   handleTagRemove = name => {
-    const newIngredients = this.state.mainIngredients.filter(
+    const { mainIngredients } = this.state;
+    const newIngredients = mainIngredients.filter(
       ingredient => ingredient !== name
     );
     this.setState({ mainIngredients: newIngredients });
@@ -80,13 +82,14 @@ export class CreateRecipe extends Component {
           url,
           comments,
           mainIngredients,
-          tags: selectedTags
+          tags: selectedTags,
         },
         error => {
+          const { history } = this.props;
           if (error) {
             this.setState({ loading: false, error: error.message });
           } else {
-            this.props.history.push('/recipes');
+            history.push('/recipes');
           }
         }
       );
@@ -102,7 +105,7 @@ export class CreateRecipe extends Component {
       comments,
       tags,
       currentIngredient,
-      mainIngredients
+      mainIngredients,
     } = this.state;
 
     return (
@@ -184,7 +187,7 @@ export class CreateRecipe extends Component {
                   <Tag
                     key={i}
                     name={ingredient}
-                    withButton={true}
+                    withButton
                     onClick={this.handleTagRemove}
                   />
                 ))}
@@ -203,8 +206,6 @@ export class CreateRecipe extends Component {
 
 CreateRecipe.propTypes = {
   history: PropTypes.object,
-  location: PropTypes.object,
-  match: PropTypes.object
 };
 
 export default withRouter(CreateRecipe);

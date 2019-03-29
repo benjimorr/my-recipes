@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Form from '../styles/Form';
 
@@ -34,7 +35,26 @@ class EditRecipe extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    // ...
+
+    // Get values from state
+    const { title, url, comments } = this.state;
+
+    Meteor.call(
+      'updateRecipe',
+      {
+        id: this.props.recipeId,
+        title,
+        url,
+        comments
+      },
+      error => {
+        if (error) {
+          this.setState({ error: error.message });
+        } else {
+          this.props.history.push('/recipes');
+        }
+      }
+    );
   };
 
   render() {
@@ -95,11 +115,14 @@ class EditRecipe extends Component {
 }
 
 EditRecipe.propTypes = {
-  recipeId: PropTypes.string.isRequired
+  recipeId: PropTypes.string.isRequired,
+  history: PropTypes.object,
+  location: PropTypes.object,
+  match: PropTypes.object
 };
 
 EditRecipe.defaultProps = {
   recipeId: ''
 };
 
-export default EditRecipe;
+export default withRouter(EditRecipe);

@@ -11,5 +11,14 @@ Meteor.methods({
       createdAt: new Date(),
       lastUsed: new Date()
     });
+  },
+  updateRecipe({ id, title, url, comments }) {
+    Recipes.update(id, {
+      $set: {
+        title,
+        url,
+        comments
+      }
+    });
   }
 });

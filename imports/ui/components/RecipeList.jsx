@@ -8,12 +8,13 @@ function formatTitle(title) {
   return title.length < 40 ? title : `${title.slice(0, 39)}...`;
 }
 
-const RecipeList = props => (
+const RecipeList = ({ recipes, loading }) => (
   <RecipeListStyles>
     {(() => {
-      if (!props.recipes.length) return <p>No Recipes Found</p>;
+      if (loading) return <p>Loading...</p>;
+      if (!recipes.length) return <p>No Recipes Found</p>;
 
-      return props.recipes.map(recipe => {
+      return recipes.map(recipe => {
         const { _id, title, url, mainIngredients, comments } = recipe;
 
         return (
@@ -43,11 +44,13 @@ const RecipeList = props => (
 );
 
 RecipeList.propTypes = {
-  recipes: PropTypes.array.isRequired
+  recipes: PropTypes.array.isRequired,
+  loading: PropTypes.bool.isRequired
 };
 
 RecipeList.defaultProps = {
-  recipes: []
+  recipes: [],
+  loading: false
 };
 
 export default RecipeList;

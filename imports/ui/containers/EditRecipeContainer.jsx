@@ -1,3 +1,4 @@
+import { Meteor } from 'meteor/meteor';
 import { withTracker } from 'meteor/react-meteor-data';
 import { Recipes } from '../../api/recipes/recipes';
 import EditRecipe from '../components/EditRecipe';
@@ -8,7 +9,7 @@ const EditRecipeContainer = withTracker(({ recipeId }) => {
   const recipe = Recipes.findOne(recipeId);
   return {
     loading,
-    recipe
+    recipe,
   };
 })(EditRecipe);
 

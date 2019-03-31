@@ -1,5 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import RecipeTags from '../styles/RecipeTags';
+import Form from '../styles/Form';
+import RecipeFilterStyles from '../styles/RecipeFilterStyles';
+import CheckBox from './CheckBox';
+import checkboxes from '../../../lib/tagsCheckboxes';
 
 class RecipeFilter extends Component {
   state = {
@@ -10,11 +15,18 @@ class RecipeFilter extends Component {
   };
 
   handleChange = e => {
-    const { name, value, type } = e.target;
+    const { name, value, type, checked } = e.target;
     if (type === 'text') {
       this.setState({ [name]: value });
-    } else {
-      // ...
+    } else if (type === 'checkbox') {
+      const { tags } = this.state;
+      if (checked) {
+        const newTags = [...tags].concat([value]);
+        this.setState({ tags: newTags });
+      } else if (!checked) {
+        const newTags = tags.filter(tag => tag !== value);
+        this.setState({ tags: newTags });
+      }
     }
   };
 
@@ -29,15 +41,19 @@ class RecipeFilter extends Component {
     const { handleFilterSubmit } = this.props;
 
     return (
-      <div>
-        <button type="button" onClick={this.toggleFilterMenu}>
-          Filter Recipes
+      <RecipeFilterStyles>
+        <button
+          className="filterMenuButton"
+          type="button"
+          onClick={this.toggleFilterMenu}
+        >
+          {filterMenuHidden ? 'Filter Recipes' : 'Hide Filter Menu'}
         </button>
-        <div hidden={filterMenuHidden}>
-          <form onSubmit={handleFilterSubmit({ title, mainIngredients, tags })}>
+        <div className="filterMenu" hidden={filterMenuHidden}>
+          <Form onSubmit={handleFilterSubmit({ title, mainIngredients, tags })}>
             <fieldset>
               <label htmlFor="title">
-                Title
+                By Title
                 <input
                   type="text"
                   id="title"
@@ -48,11 +64,29 @@ class RecipeFilter extends Component {
                 />
               </label>
 
-              <button type="submit">Filter</button>
+              <RecipeTags>
+                By Recipe Tags
+                <div className="recipeTagsArea">
+                  {checkboxes.map(item => (
+                    <label htmlFor={item.name} key={item.name}>
+                      <CheckBox
+                        id={item.name}
+                        name={item.name}
+                        value={item.value}
+                        checked={tags.includes(item.value)}
+                        onChange={this.handleChange}
+                      />
+                      {item.title}
+                    </label>
+                  ))}
+                </div>
+              </RecipeTags>
+
+              <button type="submit">Apply</button>
             </fieldset>
-          </form>
+          </Form>
         </div>
-      </div>
+      </RecipeFilterStyles>
     );
   }
 }

@@ -17,6 +17,9 @@ const RecipeFilterStyles = styled.div`
   .filterMenu {
     text-align: left;
   }
+  .clearFilter {
+    margin-left: 1rem;
+  }
 `;
 
 export default RecipeFilterStyles;

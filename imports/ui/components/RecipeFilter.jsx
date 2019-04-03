@@ -9,7 +9,6 @@ import checkboxes from '../../../lib/tagsCheckboxes';
 class RecipeFilter extends Component {
   state = {
     title: '',
-    mainIngredients: [],
     tags: [],
     filterMenuHidden: true,
   };
@@ -36,8 +35,21 @@ class RecipeFilter extends Component {
     }));
   };
 
+  clearFilters = e => {
+    e.preventDefault();
+    const { handleFilterSubmit } = this.props;
+    this.setState({
+      title: '',
+      tags: [],
+    });
+    handleFilterSubmit({
+      title: '',
+      tags: [],
+    });
+  };
+
   render() {
-    const { title, mainIngredients, tags, filterMenuHidden } = this.state;
+    const { title, tags, filterMenuHidden } = this.state;
     const { handleFilterSubmit } = this.props;
 
     return (
@@ -50,7 +62,12 @@ class RecipeFilter extends Component {
           {filterMenuHidden ? 'Filter Recipes' : 'Hide Filter Menu'}
         </button>
         <div className="filterMenu" hidden={filterMenuHidden}>
-          <Form onSubmit={handleFilterSubmit({ title, mainIngredients, tags })}>
+          <Form
+            onSubmit={e => {
+              e.preventDefault();
+              handleFilterSubmit({ title, tags });
+            }}
+          >
             <fieldset>
               <label htmlFor="title">
                 By Title
@@ -83,6 +100,13 @@ class RecipeFilter extends Component {
               </RecipeTags>
 
               <button type="submit">Apply</button>
+              <button
+                type="button"
+                onClick={this.clearFilters}
+                className="clearFilter"
+              >
+                Clear Filters
+              </button>
             </fieldset>
           </Form>
         </div>

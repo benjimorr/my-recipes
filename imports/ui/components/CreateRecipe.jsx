@@ -14,7 +14,7 @@ export class CreateRecipe extends Component {
     title: '',
     currentIngredient: '',
     mainIngredients: [],
-    tags: new Map(),
+    tags: [],
     url: '',
     comments: '',
     loading: false,
@@ -24,9 +24,14 @@ export class CreateRecipe extends Component {
   handleChange = e => {
     const { name, type, value, checked } = e.target;
     if (type === 'checkbox') {
-      this.setState(prevState => ({
-        tags: prevState.tags.set(value, checked),
-      }));
+      const { tags } = this.state;
+      if (checked) {
+        const newTags = [...tags].concat([value]);
+        this.setState({ tags: newTags });
+      } else if (!checked) {
+        const newTags = tags.filter(tag => tag !== value);
+        this.setState({ tags: newTags });
+      }
     } else {
       this.setState({ [name]: value });
     }
@@ -62,13 +67,8 @@ export class CreateRecipe extends Component {
 
     // Get values from state
     const { title, url, comments, mainIngredients, tags } = this.state;
-    // Find the tags from the Map structure that are actually selected
-    const selectedTags = [...tags].reduce((acc, [key, value]) => {
-      if (value) acc.push(key);
-      return acc;
-    }, []);
 
-    if (selectedTags.length <= 0) {
+    if (tags.length <= 0) {
       this.setState({ error: 'Please add at least one recipe tag.' });
     } else if (mainIngredients.length <= 0) {
       this.setState({ error: 'Please add at least one main ingredient.' });
@@ -82,7 +82,7 @@ export class CreateRecipe extends Component {
           url,
           comments,
           mainIngredients,
-          tags: selectedTags,
+          tags,
         },
         error => {
           const { history } = this.props;
@@ -158,7 +158,7 @@ export class CreateRecipe extends Component {
                     id={item.name}
                     name={item.name}
                     value={item.value}
-                    checked={tags.get(item.value)}
+                    checked={tags.includes(item.value)}
                     onChange={this.handleChange}
                   />
                   {item.title}

@@ -5,22 +5,19 @@ import RecipeListContainer from '../containers/RecipeListContainer';
 class RecipesPage extends React.Component {
   state = {
     filteredTitle: '',
-    filteredIngredients: [],
     filteredTags: [],
   };
 
-  handleFilterSubmit = filteredValues => e => {
-    e.preventDefault();
-    const { title, mainIngredients, tags } = filteredValues;
+  handleFilterSubmit = filteredValues => {
+    const { title, tags } = filteredValues;
     this.setState({
       filteredTitle: title,
-      filteredIngredients: mainIngredients,
       filteredTags: tags,
     });
   };
 
   render() {
-    const { filteredTitle, filteredIngredients, filteredTags } = this.state;
+    const { filteredTitle, filteredTags } = this.state;
 
     return (
       <div>
@@ -28,7 +25,6 @@ class RecipesPage extends React.Component {
         <RecipeFilter handleFilterSubmit={this.handleFilterSubmit} />
         <RecipeListContainer
           filteredTitle={filteredTitle}
-          filteredIngredients={filteredIngredients}
           filteredTags={filteredTags}
         />
       </div>

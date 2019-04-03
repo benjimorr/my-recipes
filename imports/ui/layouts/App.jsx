@@ -15,7 +15,7 @@ const theme = {
   offWhite: '#EDEDED',
   maxWidth: '1000px',
   boxShadow: '0 12px 24px 0 rgba(0, 0, 0, 0.2)',
-  smallBoxShadow: '0 8px 4px -2px rgba(0, 0, 0, 0.2)'
+  smallBoxShadow: '0 8px 4px -2px rgba(0, 0, 0, 0.2)',
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -49,7 +49,7 @@ const StyledPage = styled.div`
 
 const Inner = styled.div`
   max-width: ${props => props.theme.maxWidth};
-  margin: 0 auto;
+  margin: 0 auto 3rem auto;
   padding: 2rem;
 `;
 

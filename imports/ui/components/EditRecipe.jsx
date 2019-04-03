@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import Form from '../styles/Form';
@@ -8,26 +9,28 @@ class EditRecipe extends Component {
     title: '',
     url: '',
     comments: '',
-    error: ''
+    error: '',
   };
 
   componentDidUpdate(prevProps) {
-    if (prevProps.recipe !== this.props.recipe) {
-      const { title, url, comments } = this.props.recipe;
+    const { recipe } = this.props;
+    if (prevProps.recipe !== recipe) {
+      const { title, url, comments } = recipe;
       this.setState({
         title,
         url,
-        comments
+        comments,
       });
     }
   }
 
   deleteRecipe = () => {
-    Meteor.call('deleteRecipe', this.props.recipeId, error => {
+    const { recipeId, history } = this.props;
+    Meteor.call('deleteRecipe', recipeId, error => {
       if (error) {
         this.setState({ error: error.message });
       } else {
-        this.props.history.push('/recipes');
+        history.push('/recipes');
       }
     });
   };
@@ -36,7 +39,7 @@ class EditRecipe extends Component {
     const { name, type, value, checked } = e.target;
     if (type === 'checkbox') {
       this.setState(prevState => ({
-        tags: prevState.tags.set(value, checked)
+        tags: prevState.tags.set(value, checked),
       }));
     } else {
       this.setState({ [name]: value });
@@ -46,22 +49,23 @@ class EditRecipe extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    // Get values from state
+    // Get values from state & props
     const { title, url, comments } = this.state;
+    const { recipeId, history } = this.props;
 
     Meteor.call(
       'updateRecipe',
       {
-        id: this.props.recipeId,
+        id: recipeId,
         title,
         url,
-        comments
+        comments,
       },
       error => {
         if (error) {
           this.setState({ error: error.message });
         } else {
-          this.props.history.push('/recipes');
+          history.push('/recipes');
         }
       }
     );
@@ -120,6 +124,7 @@ class EditRecipe extends Component {
           </button>
         </fieldset>
         <button
+          type="button"
           className="deleteButton"
           onClick={this.deleteRecipe}
           disabled={loading}
@@ -133,13 +138,15 @@ class EditRecipe extends Component {
 
 EditRecipe.propTypes = {
   recipeId: PropTypes.string.isRequired,
+  recipe: PropTypes.objectOf(
+    PropTypes.shape({
+      title: PropTypes.string.isRequired,
+      url: PropTypes.string.isRequired,
+      comments: PropTypes.string.isRequired,
+    })
+  ).isRequired,
   history: PropTypes.object,
-  location: PropTypes.object,
-  match: PropTypes.object
-};
-
-EditRecipe.defaultProps = {
-  recipeId: ''
+  loading: PropTypes.bool.isRequired,
 };
 
 export default withRouter(EditRecipe);

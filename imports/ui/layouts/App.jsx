@@ -16,10 +16,13 @@ const Inner = styled.div`
 `;
 
 class App extends Component {
-  state = {
-    isAuthenticated: this.getMeteorData(),
-    error: '',
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      isAuthenticated: this.getMeteorData(),
+      error: '',
+    };
+  }
 
   componentWillMount() {
     const { isAuthenticated } = this.state;

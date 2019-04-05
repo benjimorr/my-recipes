@@ -73,7 +73,7 @@ class Login extends Component {
           </fieldset>
         </Form>
         <p>
-          Don't have an account? <Link to="/signup">Signup here</Link>
+          Don't have an account? <Link to="/signup">Sign up here</Link>
         </p>
       </AuthStyles>
     );

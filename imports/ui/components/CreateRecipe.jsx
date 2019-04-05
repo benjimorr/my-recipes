@@ -87,7 +87,7 @@ export class CreateRecipe extends Component {
         error => {
           const { history } = this.props;
           if (error) {
-            this.setState({ loading: false, error: error.message });
+            this.setState({ loading: false, error: error.reason });
           } else {
             history.push('/recipes');
           }

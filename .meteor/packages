@@ -20,3 +20,4 @@ react-meteor-data       # React higher-order component for reactively tracking M
 meteortoys:allthings
 check
 accounts-password
+aldeed:collection2-core

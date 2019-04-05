@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import Nav from './Nav';
@@ -38,15 +39,19 @@ const Logo = styled.h1`
   }
 `;
 
-const Header = () => (
+const Header = ({ logout }) => (
   <StyledHeader>
     <div className="bar">
       <Logo>
         <Link to="/">MyRecipes</Link>
       </Logo>
-      <Nav />
+      <Nav logout={logout} />
     </div>
   </StyledHeader>
 );
+
+Header.propTypes = {
+  logout: PropTypes.func.isRequired,
+};
 
 export default Header;

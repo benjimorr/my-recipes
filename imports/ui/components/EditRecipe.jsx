@@ -28,7 +28,7 @@ class EditRecipe extends Component {
     const { recipeId, history } = this.props;
     Meteor.call('deleteRecipe', recipeId, error => {
       if (error) {
-        this.setState({ error: error.message });
+        this.setState({ error: error.reason });
       } else {
         history.push('/recipes');
       }
@@ -63,7 +63,7 @@ class EditRecipe extends Component {
       },
       error => {
         if (error) {
-          this.setState({ error: error.message });
+          this.setState({ error: error.reason });
         } else {
           history.push('/recipes');
         }
@@ -140,9 +140,13 @@ EditRecipe.propTypes = {
   recipeId: PropTypes.string.isRequired,
   recipe: PropTypes.objectOf(
     PropTypes.shape({
+      _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       url: PropTypes.string.isRequired,
       comments: PropTypes.string.isRequired,
+      mainIngredients: PropTypes.array.isRequired,
+      tags: PropTypes.array.isRequired,
+      userId: PropTypes.string.isRequired,
     })
   ).isRequired,
   history: PropTypes.object,

@@ -38,13 +38,13 @@ const Logo = styled.h1`
   }
 `;
 
-const Header = () => (
+const Header = ({ logout }) => (
   <StyledHeader>
     <div className="bar">
       <Logo>
         <Link to="/">MyRecipes</Link>
       </Logo>
-      <Nav />
+      <Nav logout={logout} />
     </div>
   </StyledHeader>
 );

@@ -65,8 +65,9 @@ export class CreateRecipe extends Component {
   handleSubmit = e => {
     e.preventDefault();
 
-    // Get values from state
+    // Get values from state & props
     const { title, url, comments, mainIngredients, tags } = this.state;
+    const { history } = this.props;
 
     if (tags.length <= 0) {
       this.setState({ error: 'Please add at least one recipe tag.' });
@@ -85,7 +86,6 @@ export class CreateRecipe extends Component {
           tags,
         },
         error => {
-          const { history } = this.props;
           if (error) {
             this.setState({ loading: false, error: error.reason });
           } else {
@@ -110,7 +110,7 @@ export class CreateRecipe extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        {error && <p>{error}</p>}
+        {error && <p className="errorMessage">{error}</p>}
         <fieldset disabled={loading} aria-busy={loading}>
           <label htmlFor="title">
             Title

@@ -23,9 +23,9 @@ class Login extends Component {
     this.setState({ loading: true });
     const { email, password } = this.state;
     const { history } = this.props;
-    Meteor.loginWithPassword(email, password, err => {
-      if (err) {
-        this.setState({ loading: false, error: err.reason });
+    Meteor.loginWithPassword(email, password, error => {
+      if (error) {
+        this.setState({ loading: false, error: error.reason });
       } else {
         history.push('/');
       }
@@ -39,7 +39,7 @@ class Login extends Component {
       <AuthStyles>
         <h1>Login to MyRecipes</h1>
         <Form onSubmit={this.handleSubmit}>
-          {error && <p>{error}</p>}
+          {error && <p className="errorMessage">{error}</p>}
           <fieldset disabled={loading} aria-busy={loading}>
             <label htmlFor="email">
               Email

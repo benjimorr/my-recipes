@@ -34,9 +34,9 @@ class Signup extends Component {
     } else if (password !== confirmPassword) {
       this.setState({ loading: false, error: 'Passwords must be the same!' });
     } else {
-      Accounts.createUser({ email, name, password }, err => {
-        if (err) {
-          this.setState({ loading: false, error: err.reason });
+      Accounts.createUser({ email, password, profile: { name } }, error => {
+        if (error) {
+          this.setState({ loading: false, error: error.reason });
         } else {
           history.push('/');
         }
@@ -58,7 +58,7 @@ class Signup extends Component {
       <AuthStyles>
         <h1>Sign Up for MyRecipes</h1>
         <Form onSubmit={this.handleSubmit}>
-          {error && <p>{error}</p>}
+          {error && <p className="errorMessage">{error}</p>}
           <fieldset disabled={loading} aria-busy={loading}>
             <label htmlFor="email">
               Email

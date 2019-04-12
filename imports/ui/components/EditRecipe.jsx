@@ -15,7 +15,7 @@ class EditRecipe extends Component {
   componentDidUpdate(prevProps) {
     const { recipe } = this.props;
     if (prevProps.recipe !== recipe) {
-      const { title, url, comments } = recipe;
+      const { title, url, comments = '' } = recipe;
       this.setState({
         title,
         url,
@@ -80,7 +80,7 @@ class EditRecipe extends Component {
 
     return (
       <Form onSubmit={this.handleSubmit}>
-        {error && <p>{error}</p>}
+        {error && <p className="errorMessage">{error}</p>}
         <fieldset disabled={loading} aria-busy={loading}>
           <label htmlFor="title">
             Title

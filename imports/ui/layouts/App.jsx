@@ -45,9 +45,9 @@ class App extends Component {
   logout = e => {
     e.preventDefault();
     const { history } = this.props;
-    Meteor.logout(err => {
-      if (err) {
-        this.setState({ error: err.reason });
+    Meteor.logout(error => {
+      if (error) {
+        this.setState({ error: error.reason });
       } else {
         history.push('/login');
       }
@@ -62,7 +62,7 @@ class App extends Component {
       <React.Fragment>
         <Header logout={this.logout} />
         <Inner>
-          {error && <p>{error}</p>}
+          {error && <p className="errorMessage">{error}</p>}
           <Switch>
             <Route exact path="/" component={RecipesPage} />
             <Route exact path="/recipes" component={RecipesPage} />

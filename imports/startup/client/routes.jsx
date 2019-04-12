@@ -38,6 +38,10 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     color: ${theme.black};
   }
+
+  .errorMessage {
+    color: orange;
+  }
 `;
 
 const StyledPage = styled.div`

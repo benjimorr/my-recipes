@@ -5,6 +5,7 @@ import App from '../../ui/layouts/App';
 import Login from '../../ui/components/Login';
 import Signup from '../../ui/components/Signup';
 import ForgotPassword from '../../ui/components/ForgotPassword';
+import ResetPassword from '../../ui/components/ResetPassword';
 
 const theme = {
   blue: '#007AB2',
@@ -60,6 +61,11 @@ export const renderRoutes = () => (
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
             <Route exact path="/forgot-password" component={ForgotPassword} />
+            <Route
+              exact
+              path="/reset-password/:token"
+              component={ResetPassword}
+            />
             <Route path="/*" component={App} />
           </Switch>
         </StyledPage>

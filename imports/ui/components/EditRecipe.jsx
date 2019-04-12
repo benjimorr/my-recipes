@@ -153,4 +153,9 @@ EditRecipe.propTypes = {
   loading: PropTypes.bool.isRequired,
 };
 
+EditRecipe.defaultProps = {
+  recipeId: '',
+  loading: false,
+};
+
 export default withRouter(EditRecipe);

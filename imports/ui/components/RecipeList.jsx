@@ -31,7 +31,7 @@ const RecipeList = ({ recipes, loading }) => (
             </div>
             <p>{comments}</p>
             <div className="buttonList">
-              <a href={url} target="_blank">
+              <a href={url} target="_blank" rel="noopener noreferrer">
                 View Recipe
               </a>
               <Link to={`/recipes/edit/${_id}`}>Edit Recipe</Link>
@@ -45,12 +45,12 @@ const RecipeList = ({ recipes, loading }) => (
 
 RecipeList.propTypes = {
   recipes: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired
+  loading: PropTypes.bool.isRequired,
 };
 
 RecipeList.defaultProps = {
   recipes: [],
-  loading: false
+  loading: false,
 };
 
 export default RecipeList;

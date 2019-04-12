@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 import { Link } from 'react-router-dom';
-import PropTypes from 'prop-types';
 import AuthStyles from '../styles/AuthStyles';
 import Form from '../styles/Form';
 
-class Login extends Component {
+class ForgotPassword extends Component {
   state = {
     email: '',
-    password: '',
     loading: false,
     error: '',
+    success: '',
   };
 
   handleChange = e => {
@@ -21,25 +20,30 @@ class Login extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.setState({ loading: true });
-    const { email, password } = this.state;
-    const { history } = this.props;
-    Meteor.loginWithPassword(email, password, error => {
+    const { email } = this.state;
+
+    Accounts.forgotPassword({ email }, error => {
       if (error) {
-        this.setState({ loading: false, error: error.reason });
+        this.setState({ loading: false, error: error.reason, success: '' });
       } else {
-        history.push('/');
+        this.setState({
+          loading: false,
+          error: '',
+          success: 'Success! Please check your email to reset your password',
+        });
       }
     });
   };
 
   render() {
-    const { email, password, error, loading } = this.state;
+    const { email, error, success, loading } = this.state;
 
     return (
       <AuthStyles>
-        <h1>Login to MyRecipes</h1>
+        <h1>Request Password Reset</h1>
         <Form onSubmit={this.handleSubmit}>
           {error && <p className="errorMessage">{error}</p>}
+          {success && <p>{success}</p>}
           <fieldset disabled={loading} aria-busy={loading}>
             <label htmlFor="email">
               Email
@@ -54,37 +58,17 @@ class Login extends Component {
               />
             </label>
 
-            <label htmlFor="password">
-              Password
-              <input
-                type="password"
-                id="password"
-                name="password"
-                placeholder="Your Password"
-                required
-                value={password}
-                onChange={this.handleChange}
-              />
-            </label>
-
             <button type="submit" disabled={loading}>
-              Login
+              Submit
             </button>
           </fieldset>
         </Form>
         <p>
-          Don't have an account? <Link to="/signup">Sign up here</Link>
-        </p>
-        <p>
-          Forgot your password? <Link to="/forgot-password">Reset it here</Link>
+          <Link to="/login">Return to login page</Link>
         </p>
       </AuthStyles>
     );
   }
 }
 
-Login.propTypes = {
-  history: PropTypes.object,
-};
-
-export default Login;
+export default ForgotPassword;

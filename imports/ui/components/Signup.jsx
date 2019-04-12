@@ -120,6 +120,9 @@ class Signup extends Component {
         <p>
           Already have an account? <Link to="/login">Login here</Link>
         </p>
+        <p>
+          Forgot your password? <Link to="/forgot-password">Reset it here</Link>
+        </p>
       </AuthStyles>
     );
   }

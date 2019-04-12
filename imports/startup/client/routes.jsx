@@ -4,6 +4,7 @@ import styled, { ThemeProvider, createGlobalStyle } from 'styled-components';
 import App from '../../ui/layouts/App';
 import Login from '../../ui/components/Login';
 import Signup from '../../ui/components/Signup';
+import ForgotPassword from '../../ui/components/ForgotPassword';
 
 const theme = {
   blue: '#007AB2',
@@ -58,6 +59,7 @@ export const renderRoutes = () => (
           <Switch>
             <Route exact path="/login" component={Login} />
             <Route exact path="/signup" component={Signup} />
+            <Route exact path="/forgot-password" component={ForgotPassword} />
             <Route path="/*" component={App} />
           </Switch>
         </StyledPage>

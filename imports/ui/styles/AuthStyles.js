@@ -24,7 +24,7 @@ const AuthStyles = styled.div`
     color: ${props => props.theme.black};
   }
   p {
-    margin-top: 0;
+    margin: 0;
     text-align: center;
     a {
       color: white;

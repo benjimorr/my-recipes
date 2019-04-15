@@ -5,10 +5,8 @@ import PropTypes from 'prop-types';
 import AuthStyles from '../styles/AuthStyles';
 import Form from '../styles/Form';
 
-class Signup extends Component {
+class ResetPassword extends Component {
   state = {
-    email: '',
-    name: '',
     password: '',
     confirmPassword: '',
     loading: false,
@@ -23,8 +21,13 @@ class Signup extends Component {
   handleSubmit = e => {
     e.preventDefault();
     this.setState({ loading: true });
-    const { email, name, password, confirmPassword } = this.state;
-    const { history } = this.props;
+    const { password, confirmPassword } = this.state;
+    const {
+      history,
+      match: {
+        params: { token = '' },
+      },
+    } = this.props;
 
     if (password.length < 6) {
       this.setState({
@@ -34,7 +37,7 @@ class Signup extends Component {
     } else if (password !== confirmPassword) {
       this.setState({ loading: false, error: 'Passwords must be the same!' });
     } else {
-      Accounts.createUser({ email, password, profile: { name } }, error => {
+      Accounts.resetPassword(token, password, error => {
         if (error) {
           this.setState({ loading: false, error: error.reason });
         } else {
@@ -45,49 +48,16 @@ class Signup extends Component {
   };
 
   render() {
-    const {
-      email,
-      name,
-      password,
-      confirmPassword,
-      error,
-      loading,
-    } = this.state;
+    const { password, confirmPassword, loading, error } = this.state;
 
     return (
       <AuthStyles>
-        <h1>Sign Up for MyRecipes</h1>
+        <h1>Reset Your Password</h1>
         <Form onSubmit={this.handleSubmit}>
           {error && <p className="errorMessage">{error}</p>}
           <fieldset disabled={loading} aria-busy={loading}>
-            <label htmlFor="email">
-              Email
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Your Email"
-                required
-                value={email}
-                onChange={this.handleChange}
-              />
-            </label>
-
-            <label htmlFor="name">
-              Name
-              <input
-                type="text"
-                id="name"
-                name="name"
-                placeholder="Full Name"
-                required
-                value={name}
-                onChange={this.handleChange}
-              />
-            </label>
-
             <label htmlFor="password">
-              Password
+              New Password
               <input
                 type="password"
                 id="password"
@@ -100,7 +70,7 @@ class Signup extends Component {
             </label>
 
             <label htmlFor="confirmPassword">
-              Confirm Password
+              Confirm New Password
               <input
                 type="password"
                 id="confirmPassword"
@@ -113,23 +83,21 @@ class Signup extends Component {
             </label>
 
             <button type="submit" disabled={loading}>
-              Sign Up
+              Reset Password
             </button>
           </fieldset>
         </Form>
         <p>
-          Already have an account? <Link to="/login">Login here</Link>
-        </p>
-        <p>
-          Forgot your password? <Link to="/forgot-password">Reset it here</Link>
+          <Link to="/login">Return to login page</Link>
         </p>
       </AuthStyles>
     );
   }
 }
 
-Signup.propTypes = {
+ResetPassword.propTypes = {
+  match: PropTypes.object,
   history: PropTypes.object,
 };
 
-export default Signup;
+export default ResetPassword;
